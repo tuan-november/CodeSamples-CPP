@@ -72,7 +72,7 @@ CCodec::~CCodec()
 #pragma mark - Codec - Public Interface
 #pragma mark -
 
-// Huffman's Tree Encoding Algorithm
+// Huffman's Encoding Algorithm
 bool CCodec::encodeString(char * output_seq, char * input_str)
 {
     if(!isValidForEncoding(input_str))
@@ -104,7 +104,7 @@ bool CCodec::decodeString(char * output_str, char * input_seq)
     
     while(input_seq[input_seq_idx] != '\0')
     {
-        if(decodeChar(decoded_char, tree_traveller, input_seq, input_seq_idx))
+        if(decodeChar(decoded_char, input_seq, tree_traveller, input_seq_idx))
             output_str[output_str_idx++] = decoded_char;
     }
     
@@ -129,23 +129,7 @@ bool CCodec::reverseString(char * output_str, char * input_str)
     return true;
 }
 
-bool CCodec::encodeChar(char * output_seq, char input_char)
-{
-    CharNode * node_found = locateCharNode(input_char, m_root);
-    
-    if(node_found == NULL)
-        return false;
-    else
-    {
-        for(int i = 0; node_found != m_root; node_found = node_found->parent, i++)
-            output_seq[i] = node_found->node_code;
-        reverseString(output_seq, output_seq);
-//        printf("\n--> char found: %c - %s", input_char, output_seq);
-    }
-    
-    return true;
-}
-
+// Start at "curr_node" in the tree, find the "CharNode" whose value is "input_char"
 CharNode * CCodec::locateCharNode(char input_char, CharNode * curr_node)
 {
     if(curr_node == NULL)
@@ -167,7 +151,26 @@ CharNode * CCodec::locateCharNode(char input_char, CharNode * curr_node)
     return node_found;
 }
 
-bool CCodec::decodeChar(char & output_char, CharNode * curr_node, char * input_seq, int & curr_idx)
+// Encode a character to a sequence of 0s and 1s
+bool CCodec::encodeChar(char * output_seq, char input_char)
+{
+    CharNode * node_found = locateCharNode(input_char, m_root);
+    
+    if(node_found == NULL)
+        return false;
+    else
+    {
+        for(int i = 0; node_found != m_root; node_found = node_found->parent, i++)
+            output_seq[i] = node_found->node_code;
+        reverseString(output_seq, output_seq);
+//        printf("\n--> char found: %c - %s", input_char, output_seq);
+    }
+    
+    return true;
+}
+
+// Decode a sequence of 0s and 1s to a char, starting from "curr_node[curr_idx]"
+bool CCodec::decodeChar(char & output_char, char * input_seq, CharNode * curr_node, int & curr_idx)
 {
     if(input_seq == NULL)
         return false;
@@ -181,9 +184,9 @@ bool CCodec::decodeChar(char & output_char, CharNode * curr_node, char * input_s
     else
     {
         if(input_seq[curr_idx] == '0' && curr_node->left_child != NULL)
-            char_decoded = decodeChar(output_char, curr_node->left_child, input_seq, ++curr_idx);
+            char_decoded = decodeChar(output_char, input_seq, curr_node->left_child, ++curr_idx);
         if(input_seq[curr_idx] == '1' && curr_node->right_child != NULL && !char_decoded)
-            char_decoded = decodeChar(output_char, curr_node->right_child, input_seq, ++curr_idx);
+            char_decoded = decodeChar(output_char, input_seq, curr_node->right_child, ++curr_idx);
     }
     
     return char_decoded;
