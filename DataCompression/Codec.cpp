@@ -80,10 +80,11 @@ bool CCodec::encodeString(char * output_seq, char * input_str)
     
     generateCharTree(input_str);
     
-    char char_seq[20];
+    int size = kMAX_ENCODED_STRING_SIZE / kMAX_STRING_SIZE;
+    char char_seq[size];
     for(int i = 0; input_str[i] != '\0'; i++)
     {
-        memset(char_seq, '\0', 20);
+        memset(char_seq, '\0', size);
         if(encodeChar(char_seq, input_str[i]))
            strcat(output_seq, char_seq);
         
