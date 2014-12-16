@@ -8,55 +8,6 @@
 
 #include "Codec.h"
 
-#pragma mark - Struct CharNode
-#pragma mark -
-
-CharNode::CharNode()
-{
-    character   = '\0';
-    frequency   = 0;
-    node_code   = 'X';
-    
-    parent      = NULL;
-    left_child  = NULL;
-    right_child = NULL;
-}
-
-CharNode CharNode::operator=(const CharNode & rhs)
-{
-    if(this == &rhs)
-        return *this;
-    
-    character = rhs.character;
-    frequency = rhs.frequency;
-    node_code = rhs.node_code;
-    
-    parent = rhs.parent;
-    left_child = rhs.left_child;
-    right_child = rhs.right_child;
-    
-    return *this;
-}
-
-#pragma mark - CharNode Comparator
-#pragma mark -
-
-CharNodePtrComparator::CharNodePtrComparator(char optr)
-{
-    op = optr;
-}
-
-bool CharNodePtrComparator::operator()(const CharNode * lhs, const CharNode * rhs) const
-{
-    if(op == '<')
-        return lhs->frequency > rhs->frequency; // nodes with the smallest frequency enqueued at the front
-    
-    return false;
-}
-
-#pragma mark - Class Codec
-#pragma mark -
-
 CCodec::CCodec()
 {
     m_root = NULL;

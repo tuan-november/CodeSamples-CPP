@@ -11,34 +11,11 @@
 #include <map>
 #include <queue>
 
+#include "CharNode.h"
+
 #define kMAX_STRING_SIZE 1028
 #define kMAX_ENCODED_STRING_SIZE (kMAX_STRING_SIZE * (kMAX_STRING_SIZE/2 + 1))
 
-struct CharNode
-{
-    CharNode();
-    
-    char   character;
-    short  frequency;
-    char   node_code; //  0: left_child node;
-                      //  1: right_child node;
-                      //  X: root node;
-    
-    CharNode operator=(const CharNode & rhs);
-    
-    CharNode * parent;
-    CharNode * left_child;
-    CharNode * right_child;
-};
-
-struct CharNodePtrComparator
-{
-    CharNodePtrComparator(char optr);
-    bool operator()(const CharNode * lhs, const CharNode * rhs) const;
-    char op;
-};
-
-//----------------------------------------------------------------
 
 class CCodec
 {
