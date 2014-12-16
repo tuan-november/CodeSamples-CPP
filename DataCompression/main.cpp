@@ -35,6 +35,9 @@ int main(int argc, const char * argv[])
 
 void printStr(const char * my_str)
 {
+    if(my_str == NULL)
+        return;
+    
     for(int i = 0; my_str[i] != '\0' && i < kMAX_STRING_SIZE; i++)
         printf("%c", my_str[i]);
     
