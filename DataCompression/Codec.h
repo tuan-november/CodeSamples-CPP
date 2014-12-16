@@ -16,7 +16,6 @@
 #define kMAX_STRING_SIZE 1028
 #define kMAX_ENCODED_STRING_SIZE (kMAX_STRING_SIZE * (kMAX_STRING_SIZE/2 + 1))
 
-
 class CCodec
 {
 public:

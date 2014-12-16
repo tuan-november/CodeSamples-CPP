@@ -38,7 +38,6 @@ bool CCodec::encodeString(char * output_seq, char * input_str)
         memset(char_seq, '\0', size);
         if(encodeChar(char_seq, input_str[i]))
            strcat(output_seq, char_seq);
-        
     }
     
     return true;
@@ -88,7 +87,6 @@ CharNode * CCodec::locateCharNode(char input_char, CharNode * curr_node)
         return NULL;
     
     CharNode * node_found = NULL;
-    
     if(curr_node->character != input_char)
     {
         if(curr_node->left_child != NULL)
@@ -167,7 +165,6 @@ bool CCodec::isValidForEncoding(char * input_str)
 {
     return (input_str == NULL) ? false : true;
 }
-
 
 bool CCodec::generateCharTree(char * input_str)
 {
