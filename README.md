@@ -1,7 +1,8 @@
 Data Compression - C++ Code Samples
 
 Written by Tuan Anh Nguyen - Software Engineer
-(C) - Dec 2014
+                             www.MyAIvisions.com
+Copyright - Dec 7, 2014
 
 Description: This featured program compresses and encodes a string of characters into a series of 0s and 1s. 
              It can also decompresses and decodes a series of 0s and 1s back to the original characters.
